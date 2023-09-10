@@ -1,8 +1,27 @@
 {% extends "tapa/base.html" %}
 {% block content %}
 <div class="text-center text-warning">
-    TapaTapa-s    
+    TapaTapa-s
+    
 </div>
+{% if user.is_authenticated %}
+    {% for tap in taps %}                           
+    <article class="media content-section">
+        <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="{% url 'profile' %}">{{ tap.user }}</a>
+        </div>
+        <h2><a class="article-title" href="#">{{ tap.title }}</a></h2>
+        <div class="article-toshow">
+            <p class="article-content text-info">{{ tap.message }}</p>
+        </div>
+        </div>
+    </article>
+    {% endfor %}
+{% else %}
+    <a class="text-center text-warning"> Login or register to see your tapa tapa! </a>
+{% endif %}
+
 
 {% if is_paginated %}
             

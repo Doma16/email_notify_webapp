@@ -10,8 +10,8 @@ class Tap(models.Model):
 
     title = models.CharField(max_length=256, default='')
     message = models.TextField(default='')
-    send_date = models.DateTimeField("send on date...")
-
+    send_date = models.DateTimeField("send on date...", blank=True, null=True)
+    
     email_to = models.EmailField(default='', blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -32,7 +32,7 @@ class Day(models.Model):
     ]
 
     day = models.CharField(max_length=1, choices=_days)
-    time = models.TimeField(editable=True, blank=True)
+    time = models.TimeField(editable=True, blank=True, null=True)
     tap = models.ForeignKey(Tap, on_delete=models.DO_NOTHING)
 
     def __str__(self) -> str:
