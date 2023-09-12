@@ -33,7 +33,7 @@ class Day(models.Model):
 
     day = models.CharField(max_length=1, choices=_days)
     time = models.TimeField(editable=True, blank=True, null=True)
-    tap = models.ForeignKey(Tap, on_delete=models.DO_NOTHING)
+    tap = models.ForeignKey(Tap, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return f'{int(self.day)+1}th day of week, at {self.time}'
