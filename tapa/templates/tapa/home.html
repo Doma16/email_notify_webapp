@@ -9,11 +9,19 @@
     <article class="media content-section">
         <div class="media-body">
         <div class="article-metadata">
-            <a class="mr-2" href="{% url 'profile' %}">{{ tap.user }}</a>
+            <a class="mr-2" href="{% url 'profile' %}">{{ tap.0.user }}</a>
+            <a class="text-warning">Send date: {{ tap.0.send_date }}</a>
+            <a class="text-warning">To: {{ tap.0.email_to }}</a>
         </div>
-        <h2><a class="article-title" href="#">{{ tap.title }}</a></h2>
+        <h2><a class="article-title" href="#">{{ tap.0.title }}</a></h2>
         <div class="article-toshow">
-            <p class="article-content text-info">{{ tap.message }}</p>
+            <p class="article-content text-info">{{ tap.0.message }}</p>
+            {% if tap.1|first %}
+                <p class="article-content text-warning">Repeating on:</p>
+            {% endif %}
+            {% for day in tap.1 %}
+                <p class="article-content text-warning">{{ day }}</p>
+            {% endfor %}
         </div>
         </div>
     </article>

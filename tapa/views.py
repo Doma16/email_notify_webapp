@@ -20,7 +20,9 @@ class TapList(LoginRequiredMixin, ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        return Tap.objects.filter(user=self.request.user)
+        taps = Tap.objects.filter(user=self.request.user)
+        taps = [ (x, list(Day.objects.filter(tap=x.pk))) for x in taps]
+        return taps
 
 def new_tap(request):
     if request.method == 'POST':

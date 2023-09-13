@@ -2,13 +2,14 @@ from django.core.mail import send_mail
 from tapa.models import Tap, Day
 
 from tapatapa.settings import DEFAULT_FROM_EMAIL
-
+from django.utils import timezone
 import datetime
+import pytz
 
 def get_data(tap):
     return tap.title, tap.message, tap.email_to
 
-DELTA = 151
+DELTA = 16
 def in_limits_timedelta(diff):
     tot_sec = diff.days * 24 * 60 * 60 + diff.seconds
     if abs(tot_sec) <= DELTA:
@@ -35,10 +36,9 @@ def in_limits_daytime(now, day):
     return False
     
 def check_mail():
-    
     now = datetime.datetime.now()
     taps = list(Tap.objects.all())    
-
+    print(now)
     for tap in taps:
         
         title, message, to = get_data(tap)
@@ -46,25 +46,28 @@ def check_mail():
         
         date = tap.send_date
         if date:
-            date = date.replace(tzinfo=None)
-            diff = date - now
+            date = date.astimezone(tz=pytz.timezone('cet')).replace(tzinfo=None)
+            diff = date - now.replace(tzinfo=None)
+
             if in_limits_timedelta(diff):
-                send_mail(
+                sent_m = send_mail(
                     subject=title,
                     message=message,
                     from_email=DEFAULT_FROM_EMAIL,
                     recipient_list=[to],
                     fail_silently=True
                 )
+                print(f'{sent_m} : {to}')
                 
         days = list(Day.objects.filter(tap=tap.pk))
         for day in days:
             
             if in_limits_daytime(now, day):
-                send_mail(
+                sent_m = send_mail(
                     subject=title,
                     message=message,
                     from_email=DEFAULT_FROM_EMAIL,
                     recipient_list=[to],
                     fail_silently=True
                 )
+                print(f'{sent_m} : {to}')

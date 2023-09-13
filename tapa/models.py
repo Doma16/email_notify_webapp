@@ -1,12 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+import datetime
 
 # Create your models here.
 
 class Tap(models.Model):
 
-    added_on = models.DateTimeField(default=timezone.now, blank=True) 
+    added_on = models.DateTimeField(default=datetime.datetime.now, blank=True) 
 
     title = models.CharField(max_length=256, default='')
     message = models.TextField(default='')
