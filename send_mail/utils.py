@@ -29,7 +29,7 @@ def in_limits_daytime(now, day):
 
     time = now.time()
     time_sec = time.hour * 60 * 60 + time.minute * 60 + time.second
-    day_sec = day.time * 60 * 60 + day.time * 60 + day.time.second
+    day_sec = day.time.hour * 60 * 60 + day.time.minute * 60 + day.time.second
 
     if abs(time_sec - day_sec) <= DELTA:
         return True
@@ -37,8 +37,7 @@ def in_limits_daytime(now, day):
     
 def check_mail():
     now = datetime.datetime.now()
-    taps = list(Tap.objects.all())    
-    print(now)
+    taps = list(Tap.objects.all())
     for tap in taps:
         
         title, message, to = get_data(tap)
