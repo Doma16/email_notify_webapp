@@ -30,12 +30,13 @@ SECRET_KEY = conf['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','dopomapa.pythonanywhere.com']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    "django_q",
     "users.apps.UsersConfig",
     "tapa.apps.TapaConfig",
     "crispy_forms",
@@ -144,3 +145,15 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = conf['EMAIL_HOST_USER']
 EMAIL_HOST_PASSWORD = conf['EMAIL_HOST_PASSWORD']
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# Django_Q settings
+Q_CLUSTER = {
+    'name': 'tapatapa',
+    'recycle': 500,
+    'timeout': 60,
+    'compress': True,
+    'save_limit': 0,
+    'queue_limit': 500,
+    'cpu_affinity': 1,
+    'label': 'Django Q'
+}

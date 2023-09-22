@@ -9,7 +9,7 @@ import pytz
 def get_data(tap):
     return tap.title, tap.message, tap.email_to
 
-DELTA = 16
+DELTA = 151
 def in_limits_timedelta(diff):
     tot_sec = diff.days * 24 * 60 * 60 + diff.seconds
     if abs(tot_sec) <= DELTA:
@@ -36,6 +36,7 @@ def in_limits_daytime(now, day):
     return False
     
 def check_mail():
+    print('ran : check_mail')
     now = datetime.datetime.now()
     taps = list(Tap.objects.all())
     for tap in taps:

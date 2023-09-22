@@ -7,4 +7,4 @@ class TapaConfig(AppConfig):
 
     def ready(self):
         from send_mail import start
-        start.start()
+        #start.start()
